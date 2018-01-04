@@ -1,4 +1,5 @@
 import time
+from numpy import nan
 
 
 
@@ -16,7 +17,7 @@ class igc_trace():
         }
     def read_igc_file(self, filename):
         self.file = filename
-        f = open(filename, "r")
+        f = open(filename, "r", errors='ignore')
         data = f.read().splitlines()
         f.close()
         if len(data[3].split(':')) > 1:
@@ -42,4 +43,7 @@ def read_igc_B(line):
     if 'A' in line:
         dic['alt_p'] = float(line[25:30])
         dic['alt_gps'] = float(line[30:35])
+    else:
+        dic['alt_p'] = nan
+        dic['alt_gps'] = nan
     return dic
